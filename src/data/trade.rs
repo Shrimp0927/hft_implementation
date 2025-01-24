@@ -1,7 +1,7 @@
 use rust_decimal::Decimal;
 use chrono::{DateTime, Utc};
 use serde::{Serialize, Deserialize};
-use serde_json;
+//use serde_json;
 
 #[derive(Serialize, Deserialize)]
 pub struct Trade {
