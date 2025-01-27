@@ -3,10 +3,8 @@ use chrono::{DateTime, Utc};
 use serde::{Serialize, Deserialize};
 //use serde_json;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Bar {
-    #[serde(rename = "T")]
-    pub bar_type: String, // b, d, u: minute, daily, update
     #[serde(rename = "S")]
     pub symbol: String,
     #[serde(rename = "o")]
@@ -21,4 +19,7 @@ pub struct Bar {
     pub volume: usize,
     #[serde(rename = "t")]
     pub timestamp: DateTime<Utc>,
+    #[serde(default)]
+    #[serde(flatten)]
+    extra: serde_json::Value,
 }

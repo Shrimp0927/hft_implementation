@@ -3,7 +3,7 @@ use chrono::{DateTime, Utc};
 use serde::{Serialize, Deserialize};
 //use serde_json;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Quote {
     #[serde(rename = "S")]
     pub symbol: String,
@@ -13,4 +13,7 @@ pub struct Quote {
     pub bid_size: usize,
     #[serde(rename = "t")]
     pub timestamp: DateTime<Utc>,
+    #[serde(default)]
+    #[serde(flatten)]
+    extra: serde_json::Value,
 }
