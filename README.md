@@ -1,4 +1,4 @@
-## Usage:
+## Usage
 1. Clone repo
 2. Find algorithm.rs
 3. Use functions provided to implement your algorithm
