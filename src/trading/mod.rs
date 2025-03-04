@@ -42,7 +42,7 @@ impl StreamObject<TradeObject> for TradeObject {
     }
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum TimeInForce {
     #[serde(rename = "day")]
     Day,
@@ -58,7 +58,7 @@ pub enum TimeInForce {
     Fok,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 #[serde(untagged)]
 pub enum Amount {
     Quantity {
@@ -69,4 +69,17 @@ pub enum Amount {
         #[serde(rename = "notional")]
         notional: Decimal,
     },
+}
+
+impl Amount {
+    pub fn quantity(amount: impl Into<Decimal>) -> Self {
+        Self::Quantity {
+            quantity: amount.into(),
+        }
+    }
+    pub fn notional(amount: impl Into<Decimal>) -> Self {
+        Self::Notional {
+            notional: amount.into(),
+        }
+    }
 }

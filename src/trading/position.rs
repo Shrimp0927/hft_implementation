@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 use crate::trading::asset::{AssetExchange, AssetClass};
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum PositionSide {
     #[serde(rename = "short")]
     Short,
@@ -12,7 +12,7 @@ pub enum PositionSide {
     Long,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub struct Position {
     #[serde(rename = "asset_id")]
     pub asset_id: Uuid,

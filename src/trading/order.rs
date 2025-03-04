@@ -10,11 +10,9 @@ use crate::trading::asset::AssetClass;
 use crate::trading::TimeInForce;
 use crate::trading::Amount;
 
-pub fn create_new_order() {
-    // TODO
-}
+pub struct CreateOrder {}
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum OrderStatus {
     #[serde(rename = "new")]
     New,
@@ -26,8 +24,7 @@ pub enum OrderStatus {
     DoneForDay,
     #[serde(rename = "canceled")]
     Canceled,
-    #[serde(rename = "expired")]
-    Expired,
+    #[serde(rename = "expired")] Expired,
     #[serde(rename = "replaced")]
     Replaced,
     #[serde(rename = "pending_cancel")]
@@ -50,7 +47,7 @@ pub enum OrderStatus {
     Calculated,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum OrderSide {
     #[serde(rename = "buy")]
     Buy,
@@ -75,14 +72,28 @@ impl<'de> serde::Deserialize<'de> for OrderClass {
             "" => Ok(OrderClass::Simple),
             "bracket" => Ok(OrderClass::Bracket),
             "oto" => Ok(OrderClass::OTO),
-            "OCO" => Ok(OrderClass::OCO),
+            "oco" => Ok(OrderClass::OCO),
             "mleg" => Ok(OrderClass::Mleg),
             _other => Ok(OrderClass::Other),
         }
     }
 }
 
-#[derive(Debug, serde::Deserialize)]
+impl serde::Serialize for OrderClass {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        let order_class = match self {
+            OrderClass::Simple => "",
+            OrderClass::Bracket => "bracket",
+            OrderClass::OTO => "oto",
+            OrderClass::OCO => "oco",
+            OrderClass::Mleg => "mleg",
+            OrderClass::Other => "",
+        };
+        serializer.serialize_str(order_class)
+    }
+}
+
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum OrderType {
     #[serde(rename = "market")]
     Market,
@@ -96,7 +107,7 @@ pub enum OrderType {
     TrailingStop,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub struct Order {
     #[serde(rename = "id")]
     pub id: Uuid,

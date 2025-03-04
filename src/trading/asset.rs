@@ -2,7 +2,7 @@ use serde;
 
 use uuid::Uuid;
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum AssetClass {
     #[serde(rename = "us_equity")]
     UsEquity,
@@ -12,7 +12,7 @@ pub enum AssetClass {
     Crypto,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum AssetStatus {
     #[serde(rename = "active")]
     Active,
@@ -20,7 +20,7 @@ pub enum AssetStatus {
     Inactive,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum AssetExchange {
     #[serde(rename = "AMEX")]
     AMEX,
@@ -50,7 +50,7 @@ pub enum AssetExchange {
     Other,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub struct Asset {
     #[serde(rename = "id")]
     pub id: Uuid,
