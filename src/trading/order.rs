@@ -10,7 +10,42 @@ use crate::trading::asset::AssetClass;
 use crate::trading::TimeInForce;
 use crate::trading::Amount;
 
-pub struct CreateOrder {}
+#[derive(serde::Serialize, serde:: Deserialize)]
+pub struct OrderRequest {
+    #[serde(rename = "symbol")]
+    pub symbol: String,
+    #[serde(flatten)]
+    pub amount: Amount,
+    #[serde(rename = "side")]
+    pub side: OrderSide,
+    #[serde(rename = "order_class")]
+    pub class: OrderClass,
+    #[serde(rename = "type")]
+    pub type_: OrderType,
+    #[serde(rename = "time_in_force")]
+    pub time_in_force: TimeInForce,
+    #[serde(rename = "limit_price")]
+    pub limit_price: Option<Decimal>,
+    #[serde(rename = "stop_price")]
+    pub stop_price: Option<Decimal>,
+    #[serde(rename = "trail_price")]
+    pub trail_price: Option<Decimal>,
+    #[serde(rename = "trail_percent")]
+    pub trail_percent: Option<Decimal>,
+    #[serde(rename = "take_profit")]
+    pub take_profit: Option<Decimal>,
+    #[serde(rename = "stop_loss")]
+    pub stop_loss: Option<Decimal>,
+    #[serde(rename = "extended_hours")]
+    pub extended_hours: bool,
+    #[serde(rename = "client_order_id")]
+    pub client_order_id: Option<String>,
+}
+
+impl OrderRequest {
+    pub fn default() {
+    }
+}
 
 #[derive(Debug, serde::Deserialize, serde::Serialize)]
 pub enum OrderStatus {
@@ -24,12 +59,13 @@ pub enum OrderStatus {
     DoneForDay,
     #[serde(rename = "canceled")]
     Canceled,
-    #[serde(rename = "expired")] Expired,
+    #[serde(rename = "expired")]
+    Expired,
     #[serde(rename = "replaced")]
     Replaced,
     #[serde(rename = "pending_cancel")]
     PendingCancel,
-    #[serde(rename = "pending_repalce")]
+    #[serde(rename = "pending_replace")]
     PendingReplace,
     #[serde(rename = "accepted")]
     Accepted,

@@ -59,7 +59,6 @@ impl Buffer {
     }
     pub fn get_buffer(&self, buf_index: usize) -> Result<[Decimal; BUFFER_SIZE], Box<dyn Error>> {
         if buf_index > 2 {
-            println!("");
             return Err("buffer index must be [0 to 2]".into());
         }
         Ok(self.buffers.lock().unwrap()[buf_index])
